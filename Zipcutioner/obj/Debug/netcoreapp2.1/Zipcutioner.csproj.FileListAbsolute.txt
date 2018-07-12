@@ -1,0 +1,11 @@
+c:\users\robert.wolfe\source\repos\Zipcutioner\Zipcutioner\bin\Debug\netcoreapp2.1\Zipcutioner.deps.json
+c:\users\robert.wolfe\source\repos\Zipcutioner\Zipcutioner\bin\Debug\netcoreapp2.1\Zipcutioner.runtimeconfig.json
+c:\users\robert.wolfe\source\repos\Zipcutioner\Zipcutioner\bin\Debug\netcoreapp2.1\Zipcutioner.runtimeconfig.dev.json
+c:\users\robert.wolfe\source\repos\Zipcutioner\Zipcutioner\bin\Debug\netcoreapp2.1\Zipcutioner.dll
+c:\users\robert.wolfe\source\repos\Zipcutioner\Zipcutioner\bin\Debug\netcoreapp2.1\Zipcutioner.pdb
+c:\users\robert.wolfe\source\repos\Zipcutioner\Zipcutioner\obj\Debug\netcoreapp2.1\Zipcutioner.csprojAssemblyReference.cache
+c:\users\robert.wolfe\source\repos\Zipcutioner\Zipcutioner\obj\Debug\netcoreapp2.1\Zipcutioner.csproj.CoreCompileInputs.cache
+c:\users\robert.wolfe\source\repos\Zipcutioner\Zipcutioner\obj\Debug\netcoreapp2.1\Zipcutioner.AssemblyInfoInputs.cache
+c:\users\robert.wolfe\source\repos\Zipcutioner\Zipcutioner\obj\Debug\netcoreapp2.1\Zipcutioner.AssemblyInfo.cs
+c:\users\robert.wolfe\source\repos\Zipcutioner\Zipcutioner\obj\Debug\netcoreapp2.1\Zipcutioner.dll
+c:\users\robert.wolfe\source\repos\Zipcutioner\Zipcutioner\obj\Debug\netcoreapp2.1\Zipcutioner.pdb
