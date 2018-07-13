@@ -93,7 +93,7 @@ namespace Zipcutioner
 
                 entry.Delete();
                 entry = archive.CreateEntry(modFileNm);
-                document.Replace(oldVal, newVal); 
+                document.Replace(oldVal.ToLower(), newVal); 
 
                 using (StreamWriter writer = new StreamWriter(entry.Open()))
                 {

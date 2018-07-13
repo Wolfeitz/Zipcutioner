@@ -19,4 +19,3 @@ c:/users/robert.wolfe/source/repos/Zipcutioner/Zipcutioner/obj/Debug/netcoreapp2
 /Users/robert.wolfe/Projects/Zipcutioner/Zipcutioner/obj/Debug/netcoreapp2.1/Zipcutioner.AssemblyInfo.cs
 /Users/robert.wolfe/Projects/Zipcutioner/Zipcutioner/obj/Debug/netcoreapp2.1/Zipcutioner.dll
 /Users/robert.wolfe/Projects/Zipcutioner/Zipcutioner/obj/Debug/netcoreapp2.1/Zipcutioner.pdb
-/Users/robert.wolfe/Projects/Zipcutioner/Zipcutioner/obj/Debug/netcoreapp2.1/Zipcutioner.csprojAssemblyReference.cache
