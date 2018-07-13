@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Text;
+
 
 namespace Zipcutioner
 {
@@ -16,25 +16,29 @@ namespace Zipcutioner
             string modFileNm = "SCORM_utilities.js";
             string oldVal = "http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash".ToLower();
             string newVal = "https://get.adobe.com/flashplayer/".ToLower();
-            
+            string ext = "zip";
+            string folderLoc = args[0];  //@"c:\temp";
+
+            //foreach (string vArg in args)
+            //{
+            //   Console.WriteLine($"Arg: {vArg}");
+            //}
+            //Console.WriteLine($"folderLoc: {folderLoc}");
             try
             {
-                //var files = from file in Directory.EnumerateFiles(@"c:\temp", "*.zip", SearchOption.AllDirectories)
-                //           from line in File.ReadLines(file)
-                //           where line.Contains("Microsoft")
-                //          select new
+                //do we have to pass through a path to the directories or is that part of the 'name'?
+                var dirs = Directory.EnumerateDirectories(folderLoc);
+                var files = Directory.EnumerateFiles(folderLoc, "*." + ext, SearchOption.AllDirectories);
 
-                var files = Directory.EnumerateFiles(@"c:\temp", "*.zip", SearchOption.AllDirectories);
+                //this will ponly get the count of files in the top level directory
+                //Console.WriteLine("{0} total files found.", files.Count().ToString());
+                int i = 0;
 
-                foreach (string currentFile in files)
-                {
-                    //string fileName = currentFile.Substring(sourceDirectory.Length + 1);
-                    //Directory.Move(currentFile, Path.Combine(archiveDirectory, fileName));
-                    RepString(currentFile, modFileNm, oldVal, newVal);
-                }
-
+                //process all zip files in current directory
+                i = DelveZips(files, modFileNm, oldVal, newVal, i);
+                i = parseDirectory(dirs, modFileNm, oldVal, newVal, ext, i);
                 
-                Console.WriteLine("{0} files found.", files.Count().ToString());
+                Console.WriteLine("{0} files modified.", i.ToString());
             }
             catch (UnauthorizedAccessException UAEx)
             {
@@ -47,7 +51,33 @@ namespace Zipcutioner
           
         }
 
-        static void RepString(String zipFileNm, string modFileNm, string oldVal, string newVal)
+        static int parseDirectory(IEnumerable<string> dirs, string modFileNm, string oldVal, string newVal, string ext, int i)
+        {
+            foreach(string directory in dirs)
+            {
+                var ndirs = Directory.EnumerateDirectories(directory);
+                //these will be zip files which can contain files, directories, or more zips
+                var files = Directory.EnumerateFiles(directory, "*." + ext, SearchOption.AllDirectories);
+                i = DelveZips(files, modFileNm, oldVal, newVal, i);
+                i = parseDirectory(ndirs, modFileNm, oldVal, newVal, ext, i);
+
+            }
+            return i;
+        }
+
+        static int DelveZips(IEnumerable<string> files, string modFileNm, string oldVal, string newVal, int i)
+        {
+            foreach (string currentFile in files)
+            {
+                //string fileName = currentFile.Substring(sourceDirectory.Length + 1);
+                //Directory.Move(currentFile, Path.Combine(archiveDirectory, fileName));
+
+                i = RepString(currentFile, modFileNm, oldVal, newVal, i);
+            }
+            return i;
+        }
+
+        static int RepString(String zipFileNm, string modFileNm, string oldVal, string newVal, int i)
         {
 
             //https://stackoverflow.com/questions/46810169/overwrite-contents-of-ziparchiveentry
@@ -55,7 +85,7 @@ namespace Zipcutioner
             {
                 StringBuilder document;
                 var entry = archive.GetEntry(modFileNm);//entry contents "foobar123"
-                if (entry == null) { return; }
+                if (entry == null) { return i; }
                 using (StreamReader reader = new StreamReader(entry.Open()))
                 {
                     document = new StringBuilder(reader.ReadToEnd());
@@ -69,8 +99,8 @@ namespace Zipcutioner
                 {
                     writer.Write(document);
                 }
+               return i++;
             }
         }
     }
 }
-

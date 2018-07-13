@@ -681,30 +681,28 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\robert.wolfe\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "/Users/robert.wolfe/.nuget/packages/": {},
+    "/usr/local/share/dotnet/sdk/NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\users\\robert.wolfe\\source\\repos\\Zipcutioner\\Zipcutioner\\Zipcutioner.csproj",
+      "projectUniqueName": "/Users/robert.wolfe/Projects/Zipcutioner/Zipcutioner/Zipcutioner.csproj",
       "projectName": "Zipcutioner",
-      "projectPath": "c:\\users\\robert.wolfe\\source\\repos\\Zipcutioner\\Zipcutioner\\Zipcutioner.csproj",
-      "packagesPath": "C:\\Users\\robert.wolfe\\.nuget\\packages\\",
-      "outputPath": "c:\\users\\robert.wolfe\\source\\repos\\Zipcutioner\\Zipcutioner\\obj\\",
+      "projectPath": "/Users/robert.wolfe/Projects/Zipcutioner/Zipcutioner/Zipcutioner.csproj",
+      "packagesPath": "/Users/robert.wolfe/.nuget/packages/",
+      "outputPath": "/Users/robert.wolfe/Projects/Zipcutioner/Zipcutioner/obj",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\robert.wolfe\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/robert.wolfe/.config/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.1"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -722,8 +720,9 @@
       "netcoreapp2.1": {
         "dependencies": {
           "Microsoft.NETCore.App": {
+            "suppressParent": "All",
             "target": "Package",
-            "version": "[2.1.0, )",
+            "version": "2.1.0",
             "autoReferenced": true
           }
         },
