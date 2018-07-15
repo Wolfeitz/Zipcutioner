@@ -37,7 +37,7 @@ namespace Zipcutioner
 
                 //process all zip files in current directory
                 i = DelveZips(files, modFileNm, oldVal, newVal, i);
-                //i = parseDirectory(dirs, modFileNm, oldVal, newVal, ext, i);
+                i = parseDirectory(dirs, modFileNm, oldVal, newVal, ext, i);
                 
                 Console.WriteLine("{0} files modified.", i.ToString());
             }
@@ -52,19 +52,19 @@ namespace Zipcutioner
           
         }
 
-        //static int parseDirectory(IEnumerable<string> dirs, string modFileNm, string oldVal, string newVal, string ext, int i)
-        //{
-        //    foreach(string directory in dirs)
-        //    {
-        //        var ndirs = Directory.EnumerateDirectories(directory);
-        //        //these will be zip files which can contain files, directories, or more zips
-        //        var files = Directory.EnumerateFiles(directory, "*." + ext, SearchOption.AllDirectories);
-        //        i = DelveZips(files, modFileNm, oldVal, newVal, i);
-        //        i = parseDirectory(ndirs, modFileNm, oldVal, newVal, ext, i);
+        static int parseDirectory(IEnumerable<string> dirs, string modFileNm, string oldVal, string newVal, string ext, int i)
+        {
+            foreach(string directory in dirs)
+            {
+                var ndirs = Directory.EnumerateDirectories(directory);
+                //these will be zip files which can contain files, directories, or more zips
+                var files = Directory.EnumerateFiles(directory, "*." + ext, SearchOption.AllDirectories);
+                i = DelveZips(files, modFileNm, oldVal, newVal, i);
+                i = parseDirectory(ndirs, modFileNm, oldVal, newVal, ext, i);
 
-        //    }
-        //    return i;
-        //}
+            }
+            return i;
+        }
 
         static int DelveZips(IEnumerable<string> files, string modFileNm, string oldVal, string newVal, int i)
         {
