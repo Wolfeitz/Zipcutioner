@@ -17,7 +17,8 @@ namespace Zipcutioner
             string oldVal = "http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash".ToLower();
             string newVal = "https://get.adobe.com/flashplayer/".ToLower();
             string ext = "zip";
-            string folderLoc = "/Volumes/Macintosh HD/Users/robert.wolfe/temp"; //args[0];  //@"c:\temp";
+            //string folderLoc = "/Volumes/Macintosh HD/Users/robert.wolfe/temp"; //args[0];  //@"c:\temp";
+            string folderLoc = args[0];
 
             //foreach (string vArg in args)
             //{
