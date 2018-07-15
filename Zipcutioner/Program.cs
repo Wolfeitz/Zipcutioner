@@ -14,8 +14,8 @@ namespace Zipcutioner
             //Console.WriteLine("Hello World!");
 
             string modFileNm = "SCORM_utilities.js".ToLower();
-            string oldVal = "http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash".ToLower();
-            string newVal = "https://get.adobe.com/flashplayer/".ToLower();
+            string oldVal = "http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash";
+            string newVal = "https://get.adobe.com/flashplayer/";
             string ext = "zip";
             //string folderLoc = "/Volumes/Macintosh HD/Users/robert.wolfe/temp"; //args[0];  //@"c:\temp";
             string folderLoc = args[0];
@@ -105,7 +105,6 @@ namespace Zipcutioner
                     {
 
 
-
                         //StringBuilder document;
                         //var entry = archive.GetEntry("foo.txt");//entry contents "foobar123"
                         using (StreamReader reader = new StreamReader(fi.Open()))
@@ -113,7 +112,7 @@ namespace Zipcutioner
                             document = new StringBuilder(reader.ReadToEnd());
                         }
 
-                        document.Replace("http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash", newVal);
+                        document.Replace(oldVal, newVal);
 
                         using (StreamWriter writer = new StreamWriter(fi.Open()))
                         {
