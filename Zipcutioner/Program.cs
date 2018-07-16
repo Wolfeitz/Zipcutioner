@@ -27,8 +27,8 @@ namespace Zipcutioner
             //Console.WriteLine($"folderLoc: {folderLoc}");
             try
             {
-                //do we have to pass through a path to the directories or is that part of the 'name'?
-                var dirs = Directory.EnumerateDirectories(folderLoc);
+                //var dirs = Directory.EnumerateDirectories(folderLoc);
+                //this will get all the zip files from files and folders but not from zips
                 var files = Directory.EnumerateFiles(folderLoc, "*." + ext, SearchOption.AllDirectories);
 
                 //this will ponly get the count of files in the top level directory
@@ -37,7 +37,7 @@ namespace Zipcutioner
 
                 //process all zip files in current directory
                 i = DelveZips(files, modFileNm, oldVal, newVal, i);
-                i = parseDirectory(dirs, modFileNm, oldVal, newVal, ext, i);
+                //i = parseDirectory(dirs, modFileNm, oldVal, newVal, ext, i);
                 
                 Console.WriteLine("{0} files modified.", i.ToString());
             }
@@ -73,81 +73,36 @@ namespace Zipcutioner
                 //string fileName = currentFile.Substring(sourceDirectory.Length + 1);
                 //Directory.Move(currentFile, Path.Combine(archiveDirectory, fileName));
 
-                i = RepString(currentFile, modFileNm, oldVal, newVal, i);
-            }
-            return i;
-        }
-
-        static int RepString(String zipFileNm, string modFileNm, string oldVal, string newVal, int i)
-        {
-            //https://stackoverflow.com/questions/46810169/overwrite-contents-of-ziparchiveentry
-            using (var archive = ZipFile.Open(zipFileNm, ZipArchiveMode.Update))
-            {
-                StringBuilder document;
-                //this seems to be seaching by fullname wich contains the path in the zip file and not simply the name
-                //var entry = archive.GetEntry(modFileNm);  //entry contents "foobar123"
-                //if (entry == null) { return i; }
-
-
-                //ZipArchiveEntry entry = archive.GetEntry("ExistingFile.txt");
-                //using (StreamWriter writer = new StreamWriter(entry.Open()))
-                //{
-                //    writer.BaseStream.Seek(0, SeekOrigin.End);
-                //    writer.WriteLine("append line to file");
-                //}
-                //entry.LastWriteTime = DateTimeOffset.UtcNow.LocalDateTime;
-
-
-                foreach (var fi in archive.Entries)
+                //https://stackoverflow.com/questions/46810169/overwrite-contents-of-ziparchiveentry
+                using (var archive = ZipFile.Open(currentFile, ZipArchiveMode.Update))
                 {
-                    //this assumes only one of this file then exits.  :/
-                    if (fi.Name.ToLower() == modFileNm) 
+                    StringBuilder document;
+
+                    foreach (var fi in archive.Entries)
                     {
-
-
-                        //StringBuilder document;
-                        //var entry = archive.GetEntry("foo.txt");//entry contents "foobar123"
-                        using (StreamReader reader = new StreamReader(fi.Open()))
+                        //this assumes only one of this file then exits.  :/
+                        if (fi.Name.ToLower() == modFileNm)
                         {
-                            document = new StringBuilder(reader.ReadToEnd());
+                            using (StreamReader reader = new StreamReader(fi.Open()))
+                            {
+                                document = new StringBuilder(reader.ReadToEnd());
+                            }
+
+                            document.Replace(oldVal, newVal);
+
+                            using (StreamWriter writer = new StreamWriter(fi.Open()))
+                            {
+                                writer.Write(document.ToString()); //entry contents "baz123123", expected "baz123"
+                                writer.Flush();
+                            }
+
+                            i++;
                         }
 
-                        document.Replace(oldVal, newVal);
-
-                        using (StreamWriter writer = new StreamWriter(fi.Open()))
-                        {
-                            writer.Write(document.ToString()); //entry contents "baz123123", expected "baz123"
-                            writer.Flush();
-                        }
-
-
-
-
-                        //using (StreamReader reader = new StreamReader(fi.Open()))
-                        //{
-                        //    document = new StringBuilder(reader.ReadToEnd());
-                        //}
-
-                        ////fi.Delete();
-                        ////var entry = archive.CreateEntry(modFileNm);
-                        ////document.Replace(oldVal.ToLower(), newVal);
-
-
-                        //StreamWriter writer = new StreamWriter(entryStream);
-                        //writer.WriteLine("Updated line.");
-                        //writer.Flush();
-
-                        //using (StreamWriter writer = new StreamWriter(entry.Open()))
-                        //{
-                        //    writer.Write(document);
-                        //}
-                        i++;
-                        return i;
                     }
                 }
-
-               return i;
             }
+            return i;
         }
     }
 }
