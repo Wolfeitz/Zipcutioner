@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Text;
-
+using System.Text.RegularExpressions;
 
 namespace Zipcutioner
 {
@@ -18,6 +18,9 @@ namespace Zipcutioner
             string newVal = "https://get.adobe.com/flashplayer/";
             string ext = "zip";
             //string folderLoc = "/Volumes/Macintosh HD/Users/robert.wolfe/temp"; //args[0];  //@"c:\temp";
+
+
+
             string folderLoc = args[0];
 
             //foreach (string vArg in args)
@@ -68,37 +71,50 @@ namespace Zipcutioner
 
         static int DelveZips(IEnumerable<string> files, string modFileNm, string oldVal, string newVal, int i)
         {
+            string badTxt = "RegisterForCloseOnTopWindow();}RegisterForCloseOnTopWindow();}";
+
+            //string goodTxt = "";
+
             foreach (string currentFile in files)
             {
                 //string fileName = currentFile.Substring(sourceDirectory.Length + 1);
                 //Directory.Move(currentFile, Path.Combine(archiveDirectory, fileName));
 
-                //https://stackoverflow.com/questions/46810169/overwrite-contents-of-ziparchiveentry
                 using (var archive = ZipFile.Open(currentFile, ZipArchiveMode.Update))
                 {
                     StringBuilder document;
 
                     foreach (var fi in archive.Entries)
                     {
-                        //this assumes only one of this file then exits.  :/
                         if (fi.Name.ToLower() == modFileNm)
                         {
                             using (StreamReader reader = new StreamReader(fi.Open()))
                             {
                                 document = new StringBuilder(reader.ReadToEnd());
                             }
-
+                           
                             document.Replace(oldVal, newVal);
-
-                            using (StreamWriter writer = new StreamWriter(fi.Open()))
+                            //bool foundit = false;
+                            if (Regex.Replace(document.ToString(), @"\s+", string.Empty).Contains(badTxt)) 
                             {
-                                writer.Write(document.ToString()); //entry contents "baz123123", expected "baz123"
-                                writer.Flush();
+                                //foundit = true;
+                                document.Length = document.Length - 49;
                             }
+                           
+                            //Console.Write(foundit.ToString());
+                            using (var stream = fi.Open())
+                            {
+                                
+                                stream.SetLength(document.Length);
+                                using (StreamWriter writer = new StreamWriter(stream))
+                                {
+                                    writer.Write(document);
+                                }
+                            }
+
 
                             i++;
                         }
-
                     }
                 }
             }
